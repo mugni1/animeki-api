@@ -37,6 +37,8 @@ app.use(ActorCast);
 app.use(Play);
 
 // LISTEN
-app.listen(PORT, HOST, () => {
+app.listen(PORT, () => {
   console.log(`Server up and running on port ${PORT}`);
 });
+
+export default app; // penting untuk Vercel
