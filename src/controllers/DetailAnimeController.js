@@ -32,20 +32,20 @@ export const getDetailAnime = async (req, res) => {
     });
     const gentres = [];
     $('.genxed a').each((i, el) => {
-      const title = $(el).text().trim();
-      const slug = $(el).attr('href').split('/').filter(Boolean).pop();
+      const title = $(el).text().trim() || null;
+      const slug = $(el).attr('href')?.split('/').filter(Boolean).pop() || null;
       gentres.push({ title, slug });
     });
     const synopsis = $('.entry-content p').text();
     const character_and_actor = [];
     $('.cvitempad').each((i, el) => {
-      const charater_image = $(el).find('.cvchar .cvcover img').attr('src');
-      const charater_name = $(el).find('.cvchar .cvcontent .charname').text().trim();
-      const charater_role = $(el).find('.cvchar .cvcontent .charrole').text().trim();
-      const actor_image = $(el).find('.cvactor .cvcover a img').attr('src');
-      const actor_name = $(el).find('.cvactor .cvcontent .charname a').text().trim();
-      const actor_slug = $(el).find('.cvactor .cvcontent .charname a').attr('href').split('/').filter(Boolean).pop();
-      const actor_role = $(el).find('.cvactor .cvcontent .charrole').text().trim();
+      const charater_image = $(el).find('.cvchar .cvcover img').attr('src') || null;
+      const charater_name = $(el).find('.cvchar .cvcontent .charname').text().trim() || null;
+      const charater_role = $(el).find('.cvchar .cvcontent .charrole').text().trim() || null;
+      const actor_image = $(el).find('.cvactor .cvcover a img').attr('src') || null;
+      const actor_name = $(el).find('.cvactor .cvcontent .charname a').text().trim() || null;
+      const actor_slug = $(el).find('.cvactor .cvcontent .charname a').attr('href')?.split('/').filter(Boolean).pop() || null;
+      const actor_role = $(el).find('.cvactor .cvcontent .charrole').text().trim() || null;
       character_and_actor.push({ charater_image, charater_name, charater_role, actor_image, actor_name, actor_slug, actor_role });
     });
     const episodes = [];
@@ -60,7 +60,7 @@ export const getDetailAnime = async (req, res) => {
     const last_episode = episodes[0];
     results = { cover, trailer, rating, title, spe, gentres, synopsis, character_and_actor, first_episode, last_episode, episodes };
     httpResponse(res, 200, 'Successfully get detail ' + slug, results, slug);
-  } catch {
+  } catch (err) {
     httpResponse(res, 500, 'Internal server error', null, null);
   }
 };

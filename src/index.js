@@ -11,6 +11,7 @@ import Studios from './routes/Studio.js';
 import DetailAnime from './routes/DetailAnime.js';
 import ActorCast from './routes/ActorCast.js';
 import Play from './routes/Play.js';
+import Home from './routes/Home.js';
 
 // INITIALIAZATION
 dotenv.config();
@@ -25,6 +26,7 @@ const HOST = process.env.HOST_APP;
 app.get('/', (req, res) => {
   res.send('HALLO BOY');
 });
+app.use(Home);
 app.use(Schedule);
 app.use(Ongoing);
 app.use(Completed);
