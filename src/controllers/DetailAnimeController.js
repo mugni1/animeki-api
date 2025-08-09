@@ -57,8 +57,8 @@ export const getDetailAnime = async (req, res) => {
       const episode_date = $(el).find('.epl-date').text().trim();
       episodes.push({ episode_slug, episode_number, episode_title, episode_date });
     });
-    const first_episode = episodes.pop();
-    const last_episode = episodes[0];
+    const first_episode = [...episodes].pop();
+    const last_episode = [...episodes].shift();
     results = { cover, trailer, rating, title, spe, gentres, synopsis, character_and_actor, first_episode, last_episode, episodes };
     httpResponse(res, 200, 'Successfully get detail ' + slug, results, slug);
   } catch (err) {
