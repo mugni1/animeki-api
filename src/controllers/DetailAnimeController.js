@@ -22,11 +22,11 @@ export const getDetailAnime = async (req, res) => {
     const title = $('.infox h1').text().trim();
     const spe = [];
     $('.spe span').each((i, el) => {
-      const key = $(el).find('b').text().trim().replace(':', '').split(' ').join('_').toLowerCase();
+      const title = $(el).find('b').text().trim().replace(':', '');
       const value = $(el).text().trim().replace('"', '').split(':').pop().trim();
       const slug = $(el).find('a').attr('href')?.split('/').filter(Boolean).pop() || null;
       spe.push({
-        title: key,
+        title: title,
         content: value,
         slug
       });
