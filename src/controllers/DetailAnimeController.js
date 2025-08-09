@@ -26,7 +26,8 @@ export const getDetailAnime = async (req, res) => {
       const value = $(el).text().trim().replace('"', '').split(':').pop().trim();
       const slug = $(el).find('a').attr('href')?.split('/').filter(Boolean).pop() || null;
       spe.push({
-        [key]: value,
+        title: key,
+        content: value,
         slug
       });
     });
