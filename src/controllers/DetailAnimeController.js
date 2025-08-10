@@ -17,14 +17,14 @@ export const getDetailAnime = async (req, res) => {
     let meta_data = null;
 
     const cover = $('.thumb img').attr('src');
-    const trailer = $('.rt a').attr('href').split('=').pop();
+    const trailer = $('.rt a').attr('href')?.split('=').pop() || null;
     const rating = Number($('.rt .rating strong').text().trim().split(' ').pop());
     const title = $('.infox h1').text().trim();
     const spe = [];
     $('.spe span').each((i, el) => {
       const title = $(el).find('b').text().trim().replace(':', '');
-      const value = $(el).text().trim().replace('"', '').split(':').pop().trim();
-      const slug = $(el).find('a').attr('href')?.split('/').filter(Boolean).pop() || null;
+      const value = $(el).text().trim().replace('"', '')?.split(':').pop().trim() || null;
+      const slug = $(el).find('a').attr('href')?.split('/')?.filter(Boolean).pop() || null;
       spe.push({
         title: title,
         content: value,
@@ -34,7 +34,7 @@ export const getDetailAnime = async (req, res) => {
     const gentres = [];
     $('.genxed a').each((i, el) => {
       const title = $(el).text().trim() || null;
-      const slug = $(el).attr('href')?.split('/').filter(Boolean).pop() || null;
+      const slug = $(el).attr('href')?.split('/')?.filter(Boolean).pop() || null;
       gentres.push({ title, slug });
     });
     const synopsis = $('.entry-content p').text();
@@ -51,7 +51,7 @@ export const getDetailAnime = async (req, res) => {
     });
     const episodes = [];
     $('.eplister ul li a').each((i, el) => {
-      const episode_slug = $(el).attr('href').split('/').filter(Boolean).pop();
+      const episode_slug = $(el).attr('href')?.split('/').filter(Boolean).pop() || null;
       const episode_number = $(el).find('.epl-num').text().trim();
       const episode_title = $(el).find('.epl-title').text().trim();
       const episode_date = $(el).find('.epl-date').text().trim();
@@ -62,6 +62,7 @@ export const getDetailAnime = async (req, res) => {
     results = { cover, trailer, rating, title, spe, gentres, synopsis, character_and_actor, first_episode, last_episode, episodes };
     httpResponse(res, 200, 'Successfully get detail ' + slug, results, slug);
   } catch (err) {
+    console.log(err);
     httpResponse(res, 500, 'Internal server error', null, null);
   }
 };
