@@ -46,11 +46,13 @@ export const getSearchAnime = async (req, res) => {
           const page = $(el).text().trim();
           list_page.push(Number(page));
         });
+      const total_records = [...list_page].pop();
       meta_data = {
         prev_page,
         current_page,
         next_page,
-        list_page
+        list_page,
+        total_records
       };
     });
 
